@@ -1,0 +1,123 @@
+{
+  "name": "Law Digest Agent - Every 8 Hours",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "hours",
+              "hoursInterval": 8
+            }
+          ]
+        }
+      },
+      "id": "b1b2c3d4-1001-4000-8000-000000000001",
+      "name": "Every 8 Hours",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [240, 300]
+    },
+    {
+      "parameters": {
+        "command": "cd /d \"C:\\Users\\sanyy\\OneDrive\\Desktop\\article_agent\" && \".venv\\Scripts\\python.exe\" src\\ai_digest_agent.py --once --persona law"
+      },
+      "id": "b1b2c3d4-1002-4000-8000-000000000002",
+      "name": "Run Law Digest",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [460, 300]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict"
+          },
+          "conditions": [
+            {
+              "id": "exit-code-check",
+              "leftValue": "={{ $json.exitCode }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "notEquals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "b1b2c3d4-1003-4000-8000-000000000003",
+      "name": "Did it fail?",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [680, 300]
+    },
+    {
+      "parameters": {
+        "chatId": "={{ $env.LAW_TELEGRAM_CHAT_ID || $env.TELEGRAM_CHAT_ID }}",
+        "text": "=⚠️ Law Digest Agent failed at {{ $now.toISO() }}\n\nExit code: {{ $('Run Law Digest').item.json.exitCode }}\nstderr: {{ $('Run Law Digest').item.json.stderr }}",
+        "additionalFields": {}
+      },
+      "id": "b1b2c3d4-1004-4000-8000-000000000004",
+      "name": "Notify Failure",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [900, 200],
+      "credentials": {
+        "telegramApi": {
+          "id": "telegram-creds",
+          "name": "Telegram Bot"
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Every 8 Hours": {
+      "main": [
+        [
+          {
+            "node": "Run Law Digest",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Run Law Digest": {
+      "main": [
+        [
+          {
+            "node": "Did it fail?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Did it fail?": {
+      "main": [
+        [
+          {
+            "node": "Notify Failure",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true,
+    "callerPolicy": "workflowsFromSameOwner",
+    "errorWorkflow": ""
+  },
+  "pinData": {}
+}

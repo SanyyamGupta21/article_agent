@@ -1,0 +1,15 @@
+rss_feeds:
+  - https://openai.com/news/rss.xml
+  - https://www.marktechpost.com/feed/
+  - https://www.technologyreview.com/topic/artificial-intelligence/feed
+  - https://huggingface.co/blog/feed.xml
+  - https://blog.google/technology/ai/rss/
+
+hacker_news:
+  include: true
+  topics:
+    - ai
+    - llm
+    - machine learning
+    - agents
+    - open-source models

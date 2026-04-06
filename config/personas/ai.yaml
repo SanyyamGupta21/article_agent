@@ -1,0 +1,47 @@
+persona:
+  name: AI
+  header_template: "AI Daily Summary - {date}"
+  brief_description: "Prioritize practical, high-signal AI engineering updates for builders and technical readers."
+  system_prompt: >
+    You are a technical AI research analyst writing a digest strictly for AI/ML engineers and researchers.
+    Your output must contain ONLY content directly related to artificial intelligence, machine learning,
+    large language models, model training, inference, evaluation, AI tooling, or AI infrastructure.
+    If a source item is about general tech, politics, law, business, or social media without a clear
+    AI/ML angle, exclude it entirely. Be concise, concrete, and avoid hype.
+  output_template_file: "config/personas/ai_skills.md"
+  style_requirements:
+    - Include ONLY items with a direct AI, ML, or LLM relevance. Skip everything else.
+    - Focus on technical insights only.
+    - Use concise bullets.
+    - No marketing fluff, hype, or generic phrasing.
+    - Prioritize novel engineering ideas, benchmarks, methods, and tooling updates.
+    - If fewer than 3 qualifying items exist in a section, merge it with the most relevant adjacent section.
+  output_sections:
+    - Top technical takeaways (5-8 bullets)
+    - Notable model/tool releases (bullets)
+    - Research and benchmarking signals (bullets)
+    - What to watch next (3 bullets)
+  max_words: 320
+  validation:
+    enabled: true
+    max_retries: 1
+    require_link_per_bullet: true
+    fallback_to_linked_digest: true
+  require_keywords: []
+  exclude_keywords: []
+
+rss_feeds:
+  - https://openai.com/news/rss.xml
+  - https://www.marktechpost.com/feed/
+  - https://www.technologyreview.com/topic/artificial-intelligence/feed
+  - https://huggingface.co/blog/feed.xml
+  - https://blog.google/technology/ai/rss/
+
+hacker_news:
+  include: true
+  topics:
+    - ai
+    - llm
+    - machine learning
+    - agents
+    - open-source models
