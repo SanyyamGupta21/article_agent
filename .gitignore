@@ -2,3 +2,7 @@
 __pycache__/
 *.pyc
 .env
+
+# Local logs and debug output
+logs/
+debug_output.txt
