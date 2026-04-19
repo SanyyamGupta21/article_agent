@@ -6,19 +6,7 @@ A personalized agent that pulls from newsletters, blogs, and RSS feeds to create
 
 ## 📬 Example Output
 
-> *(To Be Updated)*
-
-```text
-🧠 AI Digest — 12 Feb
-
-1. OpenAI releases new reasoning model  
-→ Improves multi-step planning and tool usage  
-🔗 link  
-
-2. Nvidia announces next-gen GPUs  
-→ Focus on inference optimization  
-🔗 link  
-```
+<img width="2048" height="1409" alt="image" src="https://github.com/user-attachments/assets/1947547f-83b7-4920-b4bf-8dc62c8dedfd" />
 
 ---
 
